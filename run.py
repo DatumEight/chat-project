@@ -23,9 +23,9 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/<username>', methods=['GET', 'POST'])
+@app.route('/chat/<username>', methods=['GET', 'POST'])
 def user(username):
-    """display chat messages"""
+    """display and add chat messages"""
 
     if request.method == 'POST':
         username = session['username']
@@ -35,13 +35,6 @@ def user(username):
 
     return render_template('chat.html', username=username,
                            chat_messages=messages)
-
-
-@app.route('/<username>/<message>')
-def sendmessage(username, message):
-    """create a new message and redirect to chat page"""
-    add_message(username, message)
-    return redirect('/' + username)
 
 
 app.run(host=os.getenv('IP'), port=int(os.getenv('PORT')), debug=True)
